@@ -3,9 +3,10 @@ from bs4 import BeautifulSoup
 import os
 import dryscrape
 
-
+initialised_link=8080
 def youtubedl(search): #calling the main function of code
-    media_type_type = "audio"
+    media_type_type = "audio" 
+
     media_url = 'https://www.youtube.com/results?search_query=' + \
           search[:len(search)-3]
     sc = requests.get(media_url)
@@ -30,6 +31,7 @@ def youtubedl(search): #calling the main function of code
             print('!')
             continue
     f_link = 'https://www.youtube.com' + link[user_input - 1]
+    score = initialised_link/1000 '''this takes the amount...'''
 
     if search[::-1][:3] == 'v- ':
         media_type_type = "defvideo"
@@ -43,7 +45,7 @@ def youtubedl(search): #calling the main function of code
         os.system("youtube-dl " + f_link)
     if media_type == "audio":
         os.system("youtube-dl -f 140 " + f_link)
-    print "Download Complete"
+    print ("Download Complete")
 
 
 flag = ""
@@ -76,7 +78,7 @@ for song in search.split(', '):
         if len(links) > 10:
             for i in range(20):
                 temp = link_[i].text.split('\n')
-                print str(i + 1) + ".", temp[2], temp[3], temp[5]
+                print (str(i + 1) + ".", temp[2], temp[3], temp[5])
             n = int(raw_input(">"))
             if n == 0:
                 youtubedl(search)
@@ -90,9 +92,9 @@ for song in search.split(', '):
                 soup1 = BeautifulSoup(response2, 'lxml')
                 final_link = soup1.findAll('span', {'class': 'url'})
                 final_link = str(final_link)[19:].split('<')
-                print "Downloading from: \n", final_link[0], "\n\n"
+                print ("Downloading from: \n", final_link[0], "\n\n")
                 os.system("curl -O " + final_link[0])
-                print "Download complete"
+                print ("Download complete")
 
         else:
             youtubedl(search) #calling the function back 
